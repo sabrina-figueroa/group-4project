@@ -11,7 +11,7 @@ ca=carterial(cv,r);
 %
 %vector of oxygen partial pressures
 %in arterial blood leaving each alveolus:
-Pa=H(ca);
+Pa=H(ca); 
 %
 %vector of oxygen partial pressures 
 %in alveolar air:
@@ -25,10 +25,10 @@ cA=PA/RT;
 %for the whole organism:
 %(write out these results)
 %oxygen concentration in (systemic) venous blood:
-cv
+cv; 
 %
 %mean arterial oxygen concentration:
-cabar=Q' *ca/sum(Q)
+cabar=Q' *ca/sum(Q);
 %  
 %mean alveolar oxygen concentration:
 cAbar=VA'*cA/sum(VA)
@@ -85,9 +85,23 @@ check6=abs(M-fa)/abs(M)
 u=ones(n,1);
 cblood=[cv*u cabar*u ca];
 cair=  [cI*u cAbar*u cA];
-Pressures=[Pv*u Pabar*u PAbar*u PI*u Pa PA];
+Pressures=[Pv*u Pabar*u PAbar*u PI*u Pa PA]; 
 figure(2)
-subplot(2,1,1),plot(r,cblood,'.')
+subplot(2,1,1),plot(r,cblood(:,1),'.'); hold on; plot(r,cblood(:,2),'.'); plot(r,cblood(:,3),'.')
+legend('venous', 'arterial', 'leaving alveolus in arteries')
+xlabel('ventilation perfusion ratio')
+ylabel('concentration in mol')
+title('Blood concentration') 
 subplot(2,1,2),plot(r,cair  ,'.')
+legend('venous', 'alveolar', 'leaving alveolus')
+xlabel('ventilation perfusion ratio')
+ylabel('concentration in mol')
+title('oxygen concentration') 
 figure(3)
-plot(r,Pressures,'.')
+plot(r, Pressures(:,1), '.'); hold on; plot(r, Pressures(:,2), '.'); hold on;
+plot(r, Pressures(:,3), '.'); hold on; plot(r, Pressures(:,4), '.'); hold on;
+plot(r, Pressures(:, 5), 'x'); hold on; plot(r, Pressures(:,6), 'x')
+legend('Venous Pp', 'Arterial Pp', 'Alveolar Pp','Oxygen inspired Pp', 'Oxygen Pp leaving Alveolus', 'Oxygen Pp in Alveolus'); 
+xlabel('ventilation perfusion ratio')
+ylabel('pressure mmHg') 
+%note that no residual oxygen is left inside the alveolus. 
