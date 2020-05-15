@@ -2,60 +2,67 @@
 %heterogeneity parameter (0<=beta<=1):
 %beta=0 for homogenous lung
 %beta=1 for no ventilation/perfusion correlation
-beta=0.5
+global Qtotal
+beta=0.5; %ventilation perfusion relationship whether or not one is independent of the other 
 %
 %number of iterations used in bisection:
-maxcount=20
+maxcount=20;
 %
 %number of ``alveoli'':
-n=100
+n=100;
 %
 %reference oxygen concentration (moles/liter):
-cref=0.2/(22.4*(310/273))
+cref=0.2/(22.4*(310/273));
 %cref=concentration of oxygen 
 %in air at sea level at body temperature
 %
 %oxygen concentration in the inspired air:
-cI=cref
+cI=cref;
 %
 %blood oxygen concentration
 %at full hemoglobin saturation: 
-cstar=cref
+cstar=cref;
 %cstar=4*(concentration of hemoglobin 
 %in blood expressed in moles/liter)
 %
 %rate of oxygen consumption (moles/minute):
-M=0.25*cref*5.6
+M=0.25*cref*5.6; 
 %
 %oxygen partial pressure 
 %at which hemoglobin is half-saturated:
-Pstar=25
+Pstar=25;
 %
 %gas constant*absolute temperature 
 %(mmHg*liters/mole):
-RT=760*22.4*(310/273)
+RT=760*22.4*(310/273); 
 %
 %oxygen partial pressure 
 %in the inspired air (mmHg):
-PI=RT*cI
+PI=RT*cI;
 %
 %oxygen concentration
 %in blood exposed directly to inspired air:
-camax=cstar*(PI/Pstar)^3/(1+(PI/Pstar)^3)
+camax=cstar*(PI/Pstar)^3/(1+(PI/Pstar)^3); 
 %camax is an upper bound 
 %on oxygen concentration in blood 
 %
 %expected value of total alveolar ventilation:
-VAtotal=5.0     %(liters/minute)
+VAtotal=5.0 ;    %(liters/minute)
 %
 %expected value of total perfusion:
-Qtotal=5.6      %(liters/minute)
+Qtotal=5.6  ;    %(liters/minute)
 %
 %expected alveolar ventilation per alveolus:
-VAbar=VAtotal/n
+VAbar=VAtotal/n;
 %
 %expected perfusion per alveolus: 
-Qbar=Qtotal/n 
+%m is the number of alveoli affected within 1:n 
+%deg is the degree of the pulmonary shunt from 0-1 : 1 is largest pulm
+%shunt. 
+m=15;
+deg=0.5;
+Qbar_1=Qbarstar(n,m,deg) ;
+Qbar=sum(Qbar_1)/n;
 %
 %random initialization 
 %of ventilation and perfusion:
@@ -71,9 +78,11 @@ VA=VAbar*(a1*beta+av*(1-beta));
 Q = Qbar*(a2*beta+av*(1-beta));
 %when beta=0, VA and Q are in a fixed proportion 
 %when beta=1, VA and Q are independent
-r=VA./Q;
+r=VA./Q; %ventilation perfusion ratio 
 figure(1)
 plot(Q,VA,'.')
+xlabel('Perfusion of blood per alveolus')
+ylabel('Alveolar Ventilation')
 %
 %find actual values of 
 %VAtotal, Qtotal, VAbar, and Qbar:
