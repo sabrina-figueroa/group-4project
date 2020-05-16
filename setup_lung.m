@@ -2,9 +2,10 @@
 %heterogeneity parameter (0<=beta<=1):
 %beta=0 for homogenous lung
 %beta=1 for no ventilation/perfusion correlation
-global Qtotal
+global cvzero
 beta=0.5; %ventilation perfusion relationship whether or not one is independent of the other 
-%
+% to simulate exercise by increasing ventilation and perfusion 
+cvzero=0.0059;
 %number of iterations used in bisection:
 maxcount=20;
 %
