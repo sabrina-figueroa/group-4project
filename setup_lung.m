@@ -2,7 +2,7 @@
 %heterogeneity parameter (0<=beta<=1):
 %beta=0 for homogenous lung
 %beta=1 for no ventilation/perfusion correlation
-global Qtotal
+global VAtotal
 beta=0.5; %ventilation perfusion relationship whether or not one is independent of the other 
 %
 %number of iterations used in bisection:
@@ -53,16 +53,18 @@ VAtotal=5.0 ;    %(liters/minute)
 Qtotal=5.6  ;    %(liters/minute)
 %
 %expected alveolar ventilation per alveolus:
-VAbar=VAtotal/n;
+m=15;
+%degree of 0.6 is normal ventilation below that is lack of ventilation and
+%above that is overventilation 
+deg=0.6;
+VAbar_mean=VAbarstar(n,m,deg) ;
+VAbar=sum(VAbar_mean)/(n);
 %
 %expected perfusion per alveolus: 
 %m is the number of alveoli affected within 1:n 
 %deg is the degree of the pulmonary shunt from 0-1 : 1 is largest pulm
 %shunt. 
-m=15;
-deg=0.5;
-Qbar_1=Qbarstar(n,m,deg) ;
-Qbar=sum(Qbar_1)/n;
+Qbar=Qtotal/n;
 %
 %random initialization 
 %of ventilation and perfusion:
