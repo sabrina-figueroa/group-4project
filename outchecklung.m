@@ -8,7 +8,7 @@ global cvzero
 %
 %vector of oxygen concentrations in 
 %arterial blood leaving each alveolus:
-ca=carterial(cv,r)*(cvzero/cv);
+ca=carterial(cv,r);
 %
 %vector of oxygen partial pressures
 %in arterial blood leaving each alveolus:
@@ -20,7 +20,7 @@ PA=Pa;
 %
 %vector of oxygen concentrations
 %in alveolar air:
-cA=PA/RT*(cvzero/cv);
+cA=PA/RT;
 %
 %concentrations and partial pressures 
 %for the whole organism:
